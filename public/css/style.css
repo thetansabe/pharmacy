@@ -1,8 +1,146 @@
+/* Reset Css */
+* {
+	padding: 0;
+	margin: 0;
+	box-sizing: border-box;
+}
+
+:root {
+    --main-color: #98d648;
+}
+
+.bg-color {
+    color: #fff;
+    background-color: var(--main-color);
+}
+
+.m-color {
+    color: var(--main-color);
+}
+
+.require::after {
+    content: " *";
+    color: red;
+
+}
+
 body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+    font-size: 18px;
+}
+
+i {
+    font-size: 28px;
+    margin-right: 5px;
+    color: var(--main-color);
 }
 
 a {
-  color: #00B7FF;
+    text-decoration: none;
+    color: black;
+    display: inline-block;
+}
+
+a:hover {
+    text-decoration: none;
+    color: black;
+}
+
+/* Header */
+#header #logo img {
+    width: 15%;
+}
+
+#header .title {
+    font-size: 48px;
+}
+
+/* Nav */
+.navbar .nav-item:hover {
+    background-color: var(--main-color);
+}
+
+.navbar .nav-item:hover a:hover, .nav-item:hover i {
+    color: #fff;
+}
+
+/* Content */
+/* Categories */
+#categories .list-group {
+    border: 2px solid var(--main-color);
+}
+
+#categories .list-group-item a {
+    color: #777;
+}
+
+#categories .list-group-item:hover a {
+    color: black;
+}
+
+/* Product list */
+#products-box .btn i {
+    color: #fff;
+    font-size: 20px;
+    margin-right: 10px;
+}
+
+#products-box .product-card:hover {
+    background-color: #eee;
+}
+
+.add-wish-list {
+    color: #777;
+    font-size: 14px;
+}
+
+.add-wish-list i {
+    font-size: 16px;
+}
+
+#products-box .card-footer i {
+    color: var(--main-color);
+}
+
+/* Blog */
+#blog .blog-heading::before {
+    content: '';
+    display: inline-block;
+    width: 10px;
+    height: 20px;
+    background-color: var(--main-color);
+    margin-right: 10px;
+}
+
+#blog .blog-box .blog-box-img {
+    width: 15%;
+}
+
+#blog .blog-box .blog-box-text {
+    color: #777;
+    font-size: 14px;
+}
+
+#blog .blog-box:hover {
+    background-color: #eee;
+}
+
+/* Modal */
+#product-modal .close {
+    position: absolute;
+    right: 15px;
+    top: 15px;
+}
+
+/* Register */
+#register-box .btn {
+    width: 49%;
+}
+
+.add-to-cart-alert {
+    position: fixed;
+    z-index: 2000;
+    top: 0;
+    left: 50%;
+    transform: translate(-50%, 0);
+    display: none;
 }
