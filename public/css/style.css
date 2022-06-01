@@ -101,6 +101,12 @@ a:hover {
     color: var(--main-color);
 }
 
+.card-img{
+    width: 350px;
+    height: 350px;
+    object-fit: cover;
+}
+
 /* Blog */
 #blog .blog-heading::before {
     content: '';

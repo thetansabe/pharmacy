@@ -1,6 +1,8 @@
 var express = require('express');
 var router = express.Router();
 
+const productController = require('../controller/ProductController')
+
 /* GET home page. */
 router.get('/', function(req, res, next) {
   res.render('index');
@@ -18,9 +20,27 @@ router.get('/forgot', function(req, res, next) {
   res.render('forgot');
 });
 
-router.get('/products', function(req, res, next) {
-  res.render('products');
+////Get products
+router.get('/products', async function(req, res, next) {
+  const allProducts = productController.getAllProduct()
+  allProducts.then(products => {
+    //console.log('product list object', products)
+    
+    res.render('products', {products});
+  })
 });
+
+router.get('/products/:id', async function(req, res, next) {
+  const category = req.params.id
+  const productsByCategory = productController.getProductByCategory(category)
+
+  productsByCategory.then(products => {
+    //console.log('product list object', products)
+    
+    res.render('products', {products});
+  })
+});
+
 
 router.get('/shopping-cart', function(req, res, next) {
   res.render('shopping-cart');
