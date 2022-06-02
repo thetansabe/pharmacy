@@ -1,38 +1,42 @@
 const catchAsync = require('../../utils/catchAsync');
 const Blog = require('../models/blogModel');
+const checkRequiredFields = require('../../utils/checkRequiredFields');
+const AppError = require('../../utils/appError');
+const uploadImage = require('../../utils/uploadImage');
 
-const moveImage = async (image) => {
-	const uploadPath = `./public/uploads/${image.name}`;
-	await image.mv(uploadPath);
-
-	return image.name;
-};
-
-exports.getBlog = catchAsync(async (req, res, next) => {
+const getById = async (id) => {
 	const blog = await Blog.findOne({
 		where: {
-			id: req.params.id,
+			id,
 		},
 	});
 
 	if (!blog) {
-		res.send('not blog');
+		throw new AppError(404);
 	}
 
-	res.send(blog);
+	return blog;
+};
+
+exports.getBlog = catchAsync(async (req, res, next) => {
+	const blog = await getById(req.params.id);
+
+	res.status(200).send('Render Blog');
 });
 
 exports.createBlog = catchAsync(async (req, res, next) => {
+	req.body['image'] = req.files.image;
+	checkRequiredFields(req.body, ['image', 'title', 'description', 'url']);
+
 	const blogData = req.body;
-	blogData['image'] = await moveImage(req.files.image);
-	res.send(blogData);
+	blogData.image = await uploadImage(req.files.image);
 
 	const blog = await Blog.create(blogData);
 	res.send('Redirect to Somewhere');
 });
 
 exports.renderCreateBlog = catchAsync(async (req, res, next) => {
-	res.send('create blog');
+	res.status(200).render('create-blog');
 });
 
 exports.renderUpdateBlog = catchAsync(async (req, res, next) => {
@@ -41,19 +45,11 @@ exports.renderUpdateBlog = catchAsync(async (req, res, next) => {
 
 exports.getAllBlog = catchAsync(async (req, res, next) => {
 	const blogs = await Blog.findAll();
-	res.send(blogs);
+	res.status(200).json(blogs);
 });
 
 exports.updateBlog = catchAsync(async (req, res, next) => {
-	const blog = await Blog.findOne({
-		where: {
-			id: req.params.id,
-		},
-	});
-
-	if (!blog) {
-		res.send('not blog');
-	}
+	const blog = await getById(req.params.id);
 
 	blog.update(req.body);
 
@@ -63,15 +59,7 @@ exports.updateBlog = catchAsync(async (req, res, next) => {
 });
 
 exports.deleteBlog = catchAsync(async (req, res, next) => {
-	const blog = await Blog.findOne({
-		where: {
-			id: req.params.id,
-		},
-	});
-
-	if (!blog) {
-		res.send('not blog');
-	}
+	const blog = await getById(req.params.id);
 
 	await blog.destroy();
 	res.json('deleted');

@@ -12,8 +12,10 @@ const {
 
 const router = express.Router();
 
-router.route('/').get(getAllBlog).post(createBlog);
-// .post(protect, restrictTo('admin'), createBlog);
+router
+	.route('/')
+	.get(getAllBlog)
+	.post(protect, restrictTo('admin'), createBlog);
 router
 	.route('/:id')
 	.get(getBlog)
