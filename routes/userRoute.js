@@ -1,19 +1,22 @@
 const express = require('express');
 
-const { protect } = require('../src/controllers/authController');
+const { protect, restrictTo } = require('../src/controllers/authController');
 
 const {
 	getAllUsers,
 	getUser,
 	updateUser,
 	deleteUser,
-	updateMe,
 } = require('../src/controllers/userController');
 
 const router = express.Router();
 
-// router.patch('/update-me', updateMe);
-router.route('/').get(getAllUsers)
-router.route('/:id').get(getUser).patch(updateUser).delete(deleteUser);
+router.get('/profile', protect, getUser);
+router.route('/').get(protect, restrictTo('admin'), getAllUsers);
+router
+	.route('/:id')
+	.get(protect, restrictTo('admin'), getUser)
+	.patch(protect, restrictTo('admin'), updateUser)
+	.delete(protect, restrictTo('admin'), deleteUser);
 
 module.exports = router;

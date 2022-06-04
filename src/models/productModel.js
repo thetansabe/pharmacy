@@ -1,48 +1,89 @@
-const Sequelize = require('sequelize');
-const db = require('../../utils/connectDB');
+const mysql = require('../models/connectDatabase');
+const AppError = require('../../utils/appError');
 
-module.exports = db.define('Product', {
-	product_id: {
-		type: Sequelize.INTEGER(11),
-		allowNull: false,
-		primaryKey: true,
-		autoIncrement: true,
-	},
-	name: {
-		type: Sequelize.STRING,
-		allowNull: false,
-	},
-	image: {
-		type: Sequelize.STRING,
-		allowNull: false,
-	},
-	quantity: {
-		type: Sequelize.INTEGER,
-		validate: {
-			isInt: true,
-			min: 0,
-			notNull: true,
-		},
-	},
-	price: {
-		type: Sequelize.INTEGER,
-		validate: {
-			isInt: true,
-			min: 0,
-			notNull: true,
-		},
-	},
-	typeOfPackage: {
-		type: Sequelize.ENUM,
-		values: ['potion', 'tablet', 'box', 'pack'],
-		allowNull: false,
-	},
-	description: {
-		type: Sequelize.STRING(1234),
-		allowNull: false,
-	},
-	company: {
-		type: Sequelize.STRING,
-		allowNull: false,
-	},
-});
+exports.getAllProduct = async () => {
+	try {
+		const allProducts = await mysql.query(`select * from product`);
+
+		return allProducts[0];
+	} catch (e) {
+		throw new AppError(500);
+	}
+};
+
+exports.getProductByCategory = async (type) => {
+	try {
+		const allProducts = await mysql.query(
+			`select * from product where category = '${type}'`
+		);
+
+		return allProducts[0];
+	} catch (e) {
+		throw new AppError(500);
+	}
+};
+
+exports.addProduct = async (objData) => {
+	try {
+		const addQuery = await mysql.query(`
+            insert into product (name, image, category, company, quantity, price, description) 
+            values ('${objData.name}', '${objData.image}', 
+            '${objData.category}', '${objData.company}', 
+            ${objData.quantity}, ${objData.price}, '${objData.description}')`);
+
+		return true;
+	} catch (e) {
+		throw new AppError(500);
+	}
+};
+
+exports.updateProduct = async (id, objData) => {
+	try {
+		if (objData.name) {
+			await mysql.query(
+				`update product set name = '${objData.name}' where product_id = ${id}`
+			);
+		}
+		if (objData.image) {
+			await mysql.query(
+				`update product set image= '${objData.image}' where product_id = ${id}`
+			);
+		}
+		if (objData.category) {
+			await mysql.query(
+				`update product set category = '${objData.category}' where product_id = ${id}`
+			);
+		}
+		if (objData.company) {
+			await mysql.query(
+				`update product set company = '${objData.company}' where product_id = ${id}`
+			);
+		}
+		if (objData.quantity) {
+			await mysql.query(
+				`update product set quantity= ${objData.quantity} where product_id = ${id}`
+			);
+		}
+		if (objData.price) {
+			await mysql.query(
+				`update product set price = ${objData.price} where product_id = ${id}`
+			);
+		}
+		if (objData.description) {
+			await mysql.query(
+				`update product set description = '${objData.description}' where product_id = ${id}`
+			);
+		}
+	} catch (e) {
+		throw new AppError(500);
+	}
+};
+
+exports.removeProduct = async (id) => {
+	try {
+		await mysql.query(`delete from product where product_id = ${id}`);
+		return true;
+	} catch (e) {
+		throw new AppError(500);
+	}
+};

@@ -9,24 +9,26 @@
 			<div class='form-group'>
 				<label for='username'>Username</label>
 				<input
-					value=''
+					value='{{username}}'
 					name='username'
 					id='username'
 					type='text'
 					class='form-control'
 					placeholder='Username'
 				/>
+				<span>{{username-message}}</span>
 			</div>
 			<div class='form-group'>
 				<label for='password'>Password</label>
 				<input
 					name='password'
-					value=''
+					value='{{password}}'
 					id='password'
 					type='password'
 					class='form-control'
 					placeholder='Password'
 				/>
+				<span>{{password-message}}</span>
 			</div>
 			<div class='form-group custom-control custom-checkbox'>
 				<input
@@ -37,9 +39,11 @@
 				/>
 				<label class='custom-control-label' for='remember'>Remember login</label>
 			</div>
+			<span>{{login-message}}</span>
 			<div class='form-group'>
 				<button class='btn btn-success w-100 bg-color border-0'>Login</button>
 			</div>
+
 			<div class='form-group'>
 				<p>Don't have an account yet?
 					<a class='m-color' href='register'>Register now</a>.</p>

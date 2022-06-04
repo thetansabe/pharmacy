@@ -7,13 +7,15 @@ const logger = require('morgan');
 const authRouter = require('./routes/authRoute');
 const userRouter = require('./routes/userRoute');
 const blogRouter = require('./routes/blogRoute');
+const productRouter = require('./routes/productRoute');
+const cartRouter = require('./routes/cartRoute');
 const viewRouter = require('./routes/viewRoute');
 const AppError = require('./utils/appError');
 const globalErrorHandler = require('./src/controllers/errorController');
 
 const app = express();
 
-app.set('views', `${__dirname}/views/`);
+app.set('views', `${__dirname}/src/views/`);
 app.set('view engine', 'hbs');
 
 app.use(logger('dev'));
@@ -25,6 +27,8 @@ app.use(express.static(`${__dirname}/public/`));
 
 app.use('/users', userRouter);
 app.use('/blogs', blogRouter);
+app.use('/products', productRouter);
+app.use('/shopping-cart', cartRouter);
 app.use('/', viewRouter, authRouter);
 app.all('*', (req, res, next) => {
 	next(new AppError(404));

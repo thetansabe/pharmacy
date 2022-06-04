@@ -1,0 +1,250 @@
+<html lang='en'>
+	<head>
+		<meta charset='UTF-8' />
+		<meta http-equiv='X-UA-Compatible' content='IE=edge' />
+		<meta name='viewport' content='width=device-width, initial-scale=1.0' />
+		<title>Nhà thuốc Phi Phụng</title>
+
+		<!-- Icon tab -->
+		<link rel='icon' href='/images/logo.jpg' />
+
+		<!-- Bootstrap -->
+		<link
+			rel='stylesheet'
+			href='https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css'
+		/>
+		<script
+			src='https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js'
+		></script>
+		<script
+			src='https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js'
+		></script>
+		<script
+			src='https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js'
+		></script>
+
+		<!-- Icon -->
+		<link
+			rel='stylesheet'
+			href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css'
+		/>
+
+		<!-- Css -->
+		<link rel='stylesheet' href='/css/style.css' />
+		<link rel='stylesheet' href='/css/responsive.css' />
+
+		{{! Javascript }}
+		<script src='js/main.js'></script>
+	</head>
+	<body id="user-layout">
+		<div class='fluid-container px-5'>
+			{{! Header }}
+			<header id='header' class='mb-lg-5 my-4'>
+				<div class='row'>
+					<div id='logo' class='col-lg-4 col-md-4 col-sm-6 row'>
+						<a href='/'>
+							<img src='/images/logo.jpg' class='mr-3 mb-3' alt='Logo' />
+							<h1 class='title d-inline m-color h3-md'>Phi Phụng</h1>
+						</a>
+					</div>
+					<div class='col-lg-4 col-md-3 col-sm-6 m-auto mb-sm-3 px-0'>
+						<div class='input-group'>
+							<input
+								type='search'
+								class='form-control'
+								placeholder='Search'
+								aria-label='Search'
+								aria-describedby='search-addon'
+							/>
+							<button
+								type='button'
+								class='btn-success border-0 bg-color px-2 rounded-right'
+							>Search</button>
+						</div>
+					</div>
+					<div class='col-lg-2 col-md-3 col-sm-6 mr-4'>
+						<a id='shopping-cart' href='shopping-cart'>
+							<i class='fa-solid fa-cart-shopping'></i>
+							<strong> Shopping cart</strong><br />
+							<span id='shopping-cart_quantity'>0</span> items
+						</a>
+					</div>
+				</div>
+
+				{{! Nav }}
+				<nav class='navbar navbar-expand-md navbar-light py-1 px-0'>
+					<button
+						class='navbar-toggler ml-auto'
+						type='button'
+						data-toggle='collapse'
+						data-target='#header-nav'
+					>
+						<span class='navbar-toggler-icon'></span>
+					</button>
+					<div id='header-nav' class='collapse navbar-collapse shadow-sm'>
+						<ul class='navbar-nav col-12 px-0'>
+							<li class='nav-item px-2'>
+								<a class='nav-link m-color' href='/'>Home</a>
+							</li>
+							<li class='nav-item px-2'>
+								<a class='nav-link' href='/register'>Register</a>
+							</li>
+							<li class='nav-item px-2'>
+								<a class='nav-link' href='/products'>Products</a>
+							</li>
+							<li class='nav-item px-2'>
+								<a class='nav-link' href='/shopping-cart'>Checkout</a>
+							</li>
+							<li class='ml-md-auto ml-sm-0 nav-item px-2' id="login_logout">
+								<a class='nav-link' href='/login'>
+									<i class='fa-solid fa-key mr-1 m-color d-none-sm'></i>
+									Login
+								</a>
+							</li>
+						</ul>
+					</div>
+				</nav>
+			</header>
+			<h1 id="not_logged_in" class="text-danger"></h1>
+			{{{body}}}
+		</div>
+
+		<!-- Footer -->
+		<footer id='footer' class='p-4 text-center mt-4 mt-lg-5 bg-color'>
+			<div class='mb-4'><h1>Contact Us</h1></div>
+			<div class='my-2'>
+				<i class='fa-solid fa-location-dot text-white'></i>
+				Quận 7, Thành phố Hồ Chí Minh
+			</div>
+			<div class='my-2'>
+				<i class='fa-solid fa-phone text-white'></i>
+				0985725612
+			</div>
+			<div class='my-2'>
+				<i class='fa-solid fa-envelope text-white'></i>
+				admin@email.com
+			</div>
+			<div class='my-2'>
+				<i class='fa-solid fa-clock text-white'></i>
+				7 days a week from 8:00 am to 8:00 pm
+			</div>
+		</footer>
+
+		{{! Modals }}
+		<div id='product-modal' class='modal fade' role='dialog'>
+			<div class='modal-dialog modal-xl shadow'>
+				<div class='modal-content container p-5'>
+					<button
+						type='button'
+						class='close float-right ml-auto'
+						data-dismiss='modal'
+					>&times;</button>
+					<div class='modal-body row py-0'>
+						<div
+							class='col-lg-6 py-3 text-center'
+							style='background-color: #eee;'
+						>
+							<img src='/images/product.png' alt='' class='w-75' />
+						</div>
+						<div class='col-lg-6 pl-lg-5'>
+							<h1 class='my-5 my-sm-4'>Paracetamon</h1>
+							<p><strong>Brand: </strong>Brand name</p>
+							<h3 class='my-4'>100.000đ</h3>
+							<p class='require'><strong>Quantity</strong></p>
+							<div class='row'>
+								<div class='col-sm-4 input-group ml-lg-3'>
+									<span class='input-group-btn'>
+										<button
+											type='button'
+											class='quantity-left-minus btn btn-light btn-number'
+											data-type='minus'
+											data-field=''
+										>
+											<span>-</span>
+										</button>
+									</span>
+									<input
+										type='text'
+										id='quantity'
+										name='quantity'
+										class='form-control input-number border-0 text-center'
+										value='1'
+										min='1'
+										max='100'
+									/>
+									<span class='input-group-btn'>
+										<button
+											type='button'
+											class='quantity-right-plus btn btn-light btn-number'
+											data-type='plus'
+											data-field=''
+										>
+											<span>+</span>
+										</button>
+									</span>
+								</div>
+								<div class='col-lg-6 col-sm-8'>
+									<button
+										class='add-to-cart btn btn-success bg-color border-0 ml-5'
+									>
+										<i class='fa-solid fa-cart-plus text-white'></i>ADD TO CART
+									</button>
+								</div>
+							</div>
+							<a href='#' class='add-wish-list mt-3'>
+								<i class='fa-solid fa-heart-circle-plus'></i>Add to Wish List
+							</a>
+						</div>
+					</div>
+					<div class='product-desc mt-4'>
+						<h4 class='m-color border-bottom pb-2 mb-3'>Description</h4>
+						<div style='color: #777'>
+							<p><strong>Health is one of most important things in our life.
+								</strong>We think that it is a real luck to have a strong
+								health. Our way of life doesn’t increase the physiological
+								condition of our body. Alcohol, cigarettes, unhealthy food,
+								stresses and other factors have a great influence on our health.
+								The human’s immune system is very uncertain thing because there
+								is a countless quantity of different dangerous viruses and
+								bacteria. From ancient times plague and other infectious
+								diseases have been killing people without leaving them any
+								chance to survive.
+								<a
+									href='#desc-collapse'
+									data-toggle='collapse'
+									class='desc-collapse-text'
+								>Read more...</a></p>
+							<div id='desc-collapse' class='collapse'>
+								<p><strong>All these diseases are even worse than wars by the
+										quantity of deaths.</strong>It is very noble activity to
+									protect health and help people recover. Our main goal is to
+									find the easiest way of treatment. We understand that human’s
+									activity is also very dangerous because it could lead to
+									unforeseeable consequences like some complications or even
+									death. Our company states that our goods are of premium
+									quality. There is nothing to worry about. This product is
+									totally safe for your health. It has passed many various tests
+									without a single failure. It is really a product of a new
+									generation.</p>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		{{! Alert }}
+		<div class='add-to-cart-alert alert alert-success px-2' role='alert'>
+			<strong>Success! </strong>Add product to cart success
+			<button
+				type='button'
+				class='close ml-1'
+				data-dismiss='alert'
+				aria-label='Close'
+			>
+				<span aria-hidden='true'>&times;</span>
+			</button>
+		</div>
+
+	</body>
+</html>

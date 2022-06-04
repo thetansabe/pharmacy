@@ -19,6 +19,11 @@ exports.changePassword = (req, res, next) => {
 	res.render('change-password');
 };
 
+exports.renderCart = (req, res, next) => {
+	res.render('shopping-cart');
+};
+
 exports.homePage = (req, res, next) => {
-	res.render('index');
+	console.log({ blogs: [...req.blogLimits], products: req.products });
+	res.render('index', { blogs: [...req.blogLimits], products: req.products });
 };

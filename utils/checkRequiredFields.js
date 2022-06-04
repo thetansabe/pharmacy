@@ -1,13 +1,14 @@
 const AppError = require('./appError');
 const normalizeInput = require('./normalizeInput');
 
-module.exports = (input, requiredFields) => {
+module.exports = (input, requiredFields, view) => {
 	const normalizedInput = normalizeInput(input);
-	const messages = {};
+	input['view'] = view;
 
+	const messages = {};
 	requiredFields.forEach((field) => {
 		if (!normalizedInput[field]) {
-			messages[field] = `${field} is required`;
+			messages[`${field}-message`] = `${field} is required`;
 		}
 	});
 

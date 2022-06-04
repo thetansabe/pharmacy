@@ -88,13 +88,8 @@ a:hover {
     background-color: #eee;
 }
 
-.add-wish-list {
-    color: #777;
-    font-size: 14px;
-}
-
-.add-wish-list i {
-    font-size: 16px;
+#products-box .card-img {
+    width: 60%;
 }
 
 #products-box .card-footer i {
