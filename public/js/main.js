@@ -44,7 +44,7 @@ function handleAddCart(button){
     const div = button.parentElement.parentElement.querySelector('.card-body')
     const product_id = parseInt(div.getAttribute('product_id'))
 
-    button.style.display = 'none'
+    //button.style.display = 'none'
 
     //tien hanh xu li them cart
     const user_id= parseInt(getCookie('user_id'))
@@ -75,19 +75,38 @@ window.addEventListener('DOMContentLoaded', async e => {
             headers: {'Content-Type' : 'application/json'},
             body: JSON.stringify({user_id})
         })
-        .then(res => res.json())
+        .then(response => response.json())
         .then(result => {
-            span_quan.innerHTML = result.data.length
+            let quantity = 0
+            result.data.forEach(obj => {
+                quantity += obj.quantity
+                
+            })
+
+            span_quan.innerHTML = quantity
         })
 
         if(user_id !== -1){
             document.querySelector('#login_logout').innerHTML = `
-            <a class='nav-link' href='/logout'>
+            <a class='nav-link' href='/logout' id = "logout_href">
                 <i class='fa-solid fa-key mr-1 m-color d-none-sm'></i>
                 Logout
             </a>
             `
         }
+
+        document.querySelector('#logout_href').addEventListener('click', e => {
+            e.preventDefault()
+            //console.log('allo')
+            fetch('/logout', {
+                method: 'post',
+            })
+            .then(res => res.json())
+            .then(data => {
+                if(data.code === 0) 
+                    window.location.href = '/'
+            })
+        })
     }
     
     if(cart){
@@ -106,7 +125,7 @@ window.addEventListener('DOMContentLoaded', async e => {
         .then(result => {
             let list = []
             result.data.forEach(obj => {
-                list.push(obj.product_id)
+                list.push({product_id: obj.product_id, quantity: obj.quantity} )
             })
 
             return list
@@ -117,18 +136,19 @@ window.addEventListener('DOMContentLoaded', async e => {
         tbody.innerHTML = ``
 
         let total = 0
-        productListIds.forEach(productId => {
+        let numberOfProducts = 0
+        productListIds.forEach(productObj => {
             fetch('/shopping-cart/renderItem',{
                 method: 'post',
                 headers: {'Content-Type' : 'application/json'},
-                body: JSON.stringify({product_id: productId})
+                body: JSON.stringify({product_id: productObj.product_id})
             })
             .then(res => res.json())
             .then(result => {
                 
                 result.data.forEach(obj => {
-                    total += obj.price
-
+                    total += obj.price * productObj.quantity
+                    numberOfProducts += productObj.quantity
                     const content = `
                     <tr>
                         <td data-th="Product">
@@ -147,7 +167,7 @@ window.addEventListener('DOMContentLoaded', async e => {
                             <input 
                                 type="number" 
                                 class="form-control form-control-lg text-center" 
-                                value="1" min="1"
+                                value="${productObj.quantity}" min="1"
                                 id = "product_quantity-input"
                             >
                         </td>
@@ -165,9 +185,11 @@ window.addEventListener('DOMContentLoaded', async e => {
                         </td>
                     </tr>`
                     tbody.innerHTML += content
-                    document.querySelector('#cart-content_total').innerText = formatCurrency(total)
+                    
                     //console.log(obj)
                 })
+                document.querySelector('#cart-content_total').innerText = formatCurrency(total)
+                //document.querySelector('#shopping-cart_quantity').innerText = numberOfProducts
             })
         })
 

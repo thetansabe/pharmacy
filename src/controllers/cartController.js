@@ -5,7 +5,10 @@ const cartController = {
 		const { user_id, product_id, quantity } = req.body;
 		console.log('cart controller', user_id)
 		const sql =
-			'INSERT INTO CART(user_id, product_id, quantity) VALUES (?, ?, ?)';
+			`INSERT INTO cart (user_id, product_id, quantity) 
+			VALUES(?, ?, ?) 
+			ON DUPLICATE KEY 
+			UPDATE quantity = quantity + 1`;
 		const params = [user_id, product_id, quantity];
 		db.query(sql, params, (err, result, fields) => {
 			if (err) {

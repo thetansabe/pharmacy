@@ -98,7 +98,8 @@ exports.login = catchAsync(async (req, res, next) => {
 
 exports.logout = (req, res, next) => {
     res.clearCookie("jwt");
-    res.status(200).redirect("/");
+    res.clearCookie("user_id")
+    res.status(200).json({code: 0});
 };
 
 exports.changePassword = catchAsync(async (req, res, next) => {
