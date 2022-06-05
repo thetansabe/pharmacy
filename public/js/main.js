@@ -82,7 +82,7 @@ window.addEventListener('DOMContentLoaded', async e => {
 
         if(user_id !== -1){
             document.querySelector('#login_logout').innerHTML = `
-            <a class='nav-link' href='/login'>
+            <a class='nav-link' href='/logout'>
                 <i class='fa-solid fa-key mr-1 m-color d-none-sm'></i>
                 Logout
             </a>
